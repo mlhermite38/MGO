@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse Comparative | Normes Connecteurs MGO</title>
+    <style>
+        /* --- Import de la police Petzl-like (Lato) --- */
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+        
+        /* --- Palette de couleurs inspirée de Petzl --- */
+        :root {
+            --petzl-dark: #231F20; /* Noir/gris très foncé pour les textes */
+            --petzl-yellow: #FFC425; /* Jaune Petzl iconique */
+            --petzl-light-grey: #F5F5F5; /* Fond de page */
+            --petzl-medium-grey: #EAEAEA; /* Bordures subtiles */
+            --petzl-white: #FFFFFF;
+            --color-danger: #D9534F; /* Gardé pour la sémantique de l'alerte */
+            --shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        /* --- Styles de base --- */
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--petzl-light-grey);
+            color: var(--petzl-dark);
+            margin: 0;
+            padding: 2em;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- Conteneur principal et en-tête --- */
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: var(--petzl-white);
+            padding: 2em 3em;
+        }
+
+        header {
+            text-align: center;
+            padding-bottom: 1.5em;
+            margin-bottom: 2em;
+        }
+
+        header h1 {
+            font-weight: 900;
+            font-size: 2.5em;
+            margin-bottom: 0.2em;
+        }
+
+        header p.subtitle {
+            font-size: 1.2em;
+            font-weight: 300;
+            color: #666;
+            max-width: 800px;
+            margin: 0.5em auto 0 auto;
+        }
+
+        /* --- Grille des cartes --- */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2em;
+        }
+        
+        /* --- Style des cartes interactives (Inspiration Petzl) --- */
+        .card {
+            background-color: transparent;
+            height: 420px;
+            perspective: 1500px;
+            cursor: pointer;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s;
+            transform-style: preserve-3d;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--petzl-medium-grey);
+        }
+
+        .card.is-flipped .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2em;
+            box-sizing: border-box;
+        }
+
+        .card-front {
+            background-color: var(--petzl-white);
+        }
+
+        .card-back {
+            background-color: var(--petzl-dark);
+            color: var(--petzl-white);
+            transform: rotateY(180deg);
+            text-align: left;
+            align-items: flex-start;
+        }
+        
+        .card-front .icon svg {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 0.5em;
+        }
+        
+        .card-front .verdict {
+            font-size: 1.1em;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .verdict.danger { color: var(--color-danger); }
+        .verdict.warning { color: #E69500; }
+        .verdict.success { color: #28a745; }
+        
+        .card-front h2 {
+            font-size: 1.6em;
+            font-weight: 700;
+            margin: 0.2em 0;
+        }
+        
+        .card-front .summary {
+            font-size: 1.1em;
+            font-weight: 300;
+            color: #555;
+            padding: 0 1em;
+        }
+
+        .card-back h3 {
+            color: var(--petzl-yellow);
+            font-weight: 700;
+            font-size: 1.2em;
+            border-bottom: 2px solid var(--petzl-yellow);
+            padding-bottom: 0.5em;
+            margin-top: 0;
+            margin-bottom: 1em;
+            width: 100%;
+        }
+
+        .card-back ul {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+            font-size: 0.9em;
+        }
+
+        .card-back li {
+            margin-bottom: 0.8em;
+            padding-left: 1.2em;
+            position: relative;
+        }
+        
+        .card-back li::before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: var(--petzl-yellow);
+            font-weight: bold;
+            font-size: 1.4em;
+            line-height: 1;
+        }
+        
+        .card-back strong {
+            font-weight: 700;
+            color: var(--petzl-white);
+        }
+        .card-back .value {
+            color: var(--petzl-yellow);
+            font-weight: bold;
+        }
+
+        /* --- Pied de page --- */
+        footer {
+            text-align: center;
+            margin-top: 3em;
+            padding-top: 1.5em;
+            border-top: 1px solid var(--petzl-medium-grey);
+            font-size: 0.9em;
+            color: #888;
+        }
+        
+        /* --- Media Queries pour impression et petits écrans --- */
+        @media (max-width: 768px) {
+            body { padding: 1em; }
+            .container { padding: 1.5em; }
+        }
+        @media print {
+            /* Styles d'impression optimisés */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Synthèse Exécutive : Sécurité des Connecteurs MGO</h1>
+            <p class="subtitle">Analyse comparative des normes Europe (EN 362) vs. Amérique du Nord (ANSI & CSA).<br/>Cliquez sur une carte pour explorer les détails.</p>
+        </header>
+
+        <main class="grid-container">
+            <div class="card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16"><path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" fill="#D9534F"/></svg>
+                        </div>
+                        <div class="verdict danger">Écart majeur de sécurité</div>
+                        <h2>Résistance du Doigt</h2>
+                        <p class="summary">Les normes nord-américaines sont **plus de 10 fois plus exigeantes**.</p>
+                    </div>
+                    <div class="card-back">
+                        <h3>Détails techniques</h3>
+                        <ul>
+                            <li><strong>EN 362:2004 :</strong> 
+                                <ul><li>- Frontale : <span class="value">1 kN</span></li><li>- Latérale : <span class="value">1,5 kN</span></li></ul>
+                            </li>
+                            <li><strong>ANSI & CSA :</strong> 
+                               <ul><li>- Frontale : <span class="value">16 kN</span></li><li>- Latérale : <span class="value">16 kN</span></li></ul>
+                            </li>
+                            <li><strong>Conclusion :</strong> Résistance supérieure aux pressions accidentelles sur le système de verrouillage.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="icon">
+                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sign-stop-fill" viewBox="0 0 16 16"><path d="M10.371 8.277v1.554c0 .537-.436.973-.973.973h-2.8c-.537 0-.973-.436-.973-.973V8.277c0-.537.436-.973.973-.973h2.8c.537 0 .973.436.973.973ZM4.893 4.612A.5.5 0 0 1 5.5 4h5a.5.5 0 0 1 .491.592l-1.5 4.5A.5.5 0 0 1 9 9.5H7a.5.5 0 0 1-.491-.408l-1.5-4.5Z" fill="#D9534F"/><path d="M12.032 3.242L11.02 1.76h-6.04L3.968 3.242H1.5V13a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V3.242h-2.468ZM8 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z" fill="#D9534F"/></svg>
+                        </div>
+                        <div class="verdict danger">Risque non couvert en EU</div>
+                        <h2>Chargement Transversal</h2>
+                        <p class="summary">Scénario de risque majeur pour les MGO, **absent de la norme EN 362**.</p>
+                    </div>
+                    <div class="card-back">
+                         <h3>Détails techniques</h3>
+                         <ul>
+                            <li><strong>EN 362:2004 :</strong> 
+                                <ul><li><span class="value">Aucune exigence</span> statique ou dynamique.</li></ul>
+                            </li>
+                            <li><strong>ANSI & CSA :</strong> 
+                               <ul><li>- **Essai Statique :** Requis à <span class="value">16 kN</span>.</li><li>- **Essai Dynamique :** Chute de 100 kg.</li></ul>
+                            </li>
+                            <li><strong>Conclusion :</strong> Seules les normes NA valident la sécurité en cas de mauvais positionnement.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <div class="icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-question-circle-fill" viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.496 6.033h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286a.237.237 0 0 0 .241.247zm2.325 6.443c.61 0 1.029-.394 1.029-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94 0 .533.425.927 1.01.927z" fill="#E69500"/></svg>
+                        </div>
+                        <div class="verdict warning">Divergence d'analyse</div>
+                        <h2>Résistance Petit Axe</h2>
+                        <p class="summary">Essai requis en Amérique du Nord, mais "non applicable" pour les MGO en Europe.</p>
+                    </div>
+                    <div class="card-back">
+                        <h3>Détails techniques</h3>
+                        <ul>
+                            <li><strong>EN 362:2004 :</strong> 
+                                <ul><li>L'essai est <span class="value">"non applicable"</span> pour les connecteurs de Classe A.</li></ul>
+                            </li>
+                            <li><strong>ANSI & CSA :</strong> 
+                               <ul><li>Résistance requise de <span class="value">16 kN</span>.</li><li>*Exemption si l'œil captif empêche ce chargement.</li></ul>
+                            </li>
+                            <li><strong>Conclusion :</strong> Les normes NA couvrent une sollicitation critique potentielle que la norme EU écarte.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+
+        <footer>
+            <p>Rapport interactif basé sur l'analyse comparative des normes EN 362:2004, ANSI/ASSP Z359.12-2019 et CSA Z259.12-16.</p>
+        </footer>
+    </div>
+
+    <script>
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('click', function() {
+                this.classList.toggle('is-flipped');
+            });
+        });
+    </script>
+
+</body>
+</html>
