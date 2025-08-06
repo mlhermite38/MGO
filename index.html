@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analyse Comparative | Normes Connecteurs MGO</title>
     <style>
-        /* --- Import de la police (Lato) --- */
+        /* --- Import de la police --- */
         @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
         
-        /* --- Palette de couleurs inspirée du modèle --- */
+        /* --- Palette de couleurs et variables (inspirée du modèle) --- */
         :root {
             --color-bg-start: #2c3e50;
             --color-bg-end: #4ca1af;
@@ -28,7 +28,6 @@
             margin: 0;
             padding: 2em;
             line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
         }
 
         /* --- Conteneur Principal & En-tête --- */
@@ -41,16 +40,11 @@
             box-shadow: var(--shadow);
         }
 
-        header {
-            text-align: center;
-            padding-bottom: 1.5em;
-            margin-bottom: 2.5em;
-        }
-
         header h1 {
             font-weight: 700;
             font-size: 2.2em;
             color: var(--color-bg-start);
+            text-align: center;
         }
 
         header p.subtitle {
@@ -59,139 +53,65 @@
             color: #555;
             max-width: 800px;
             margin: 0.5em auto 0 auto;
-        }
-
-        /* --- Grille des cartes --- */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5em;
-            margin-bottom: 3em;
+            text-align: center;
         }
         
-        /* --- Style des cartes interactives --- */
-        .card {
-            background-color: transparent;
-            height: 420px;
-            perspective: 1500px;
-            cursor: pointer;
+        /* --- Style pour l'effet de survol (hover) --- */
+        .info-hover {
+            position: relative; 
+            text-decoration: underline dotted;
+            text-decoration-color: var(--color-bg-end);
+            cursor: help;
         }
 
-        .card-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transition: transform 0.7s;
-            transform-style: preserve-3d;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
-            border: 1px solid #e0e0e0;
-            border-radius: 8px;
-        }
-
-        .card.is-flipped .card-inner {
-            transform: rotateY(180deg);
-        }
-
-        .card-front, .card-back {
+        .info-hover::after {
+            content: '';
             position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2em;
-            box-sizing: border-box;
+            bottom: 150%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 220px;
+            background-image: var(--image-url);
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            border: 3px solid var(--color-white);
             border-radius: 8px;
-            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            pointer-events: none;
+            z-index: 10;
         }
 
-        .card-front {
-            background-color: var(--color-white);
+        .info-hover:hover::after {
+            opacity: 1;
+            visibility: visible;
         }
+        
+        /* --- Styles des Cartes & Sections --- */
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5em; margin: 2.5em 0 3em 0; }
+        .card { background-color: transparent; height: 420px; perspective: 1500px; cursor: pointer; }
+        .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.7s; transform-style: preserve-3d; box-shadow: 0 4px 15px rgba(0,0,0,0.07); border: 1px solid #e0e0e0; border-radius: 8px; }
+        .card.is-flipped .card-inner { transform: rotateY(180deg); }
+        .card-front, .card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2em; box-sizing: border-box; border-radius: 8px; text-align: center; }
+        .card-front { background-color: var(--color-white); }
+        .card-back { background-color: var(--color-bg-start); color: var(--color-text-light); transform: rotateY(180deg); text-align: left; align-items: flex-start; justify-content: flex-start; }
+        .card-front .icon svg { width: 50px; height: 50px; margin-bottom: 0.7em; color: var(--color-bg-end); }
+        .card-front h2 { font-size: 1.6em; font-weight: 700; margin: 0.2em 0; color: var(--color-bg-start); }
+        .card-front .summary { font-size: 1.1em; font-weight: 300; color: #555; padding: 0 1em; }
+        .card-back h3 { color: var(--color-yellow-accent); font-weight: 700; font-size: 1.2em; border-bottom: 2px solid var(--color-yellow-accent); padding-bottom: 0.5em; margin-top: 0; margin-bottom: 1em; width: 100%; }
+        .card-back ul { list-style-type: none; padding: 0; width: 100%; font-size: 0.9em; }
+        .card-back strong { font-weight: 700; color: var(--color-white); }
+        .card-back .value { color: var(--color-yellow-accent); font-weight: bold; }
+        .card-back .details-section { margin-bottom: 1em; width: 100%; }
+        .card-back .details-section ul { padding-left: 1em; list-style-type: '- '; }
+        .ergonomie-section { padding: 2em; background-color: var(--color-light-grey); border-radius: 8px; }
+        .ergonomie-section h2 { text-align: center; color: var(--color-bg-start); font-weight: 700; margin-top: 0; }
+        .ergonomie-section p { text-align: justify; }
 
-        .card-back {
-            background-color: var(--color-bg-start);
-            color: var(--color-text-light);
-            transform: rotateY(180deg);
-            text-align: left;
-            align-items: flex-start;
-            justify-content: flex-start; /* Aligne le contenu en haut */
-        }
-        
-        .card-front .icon svg {
-            width: 50px;
-            height: 50px;
-            margin-bottom: 0.7em;
-            color: var(--color-bg-end);
-        }
-        
-        .card-front h2 {
-            font-size: 1.6em;
-            font-weight: 700;
-            margin: 0.2em 0;
-            color: var(--color-bg-start);
-        }
-        
-        .card-front .summary {
-            font-size: 1.1em;
-            font-weight: 300;
-            color: #555;
-            padding: 0 1em;
-        }
-
-        .card-back h3 {
-            color: var(--color-yellow-accent);
-            font-weight: 700;
-            font-size: 1.2em;
-            border-bottom: 2px solid var(--color-yellow-accent);
-            padding-bottom: 0.5em;
-            margin-top: 0;
-            margin-bottom: 1em;
-            width: 100%;
-        }
-
-        .card-back ul {
-            list-style-type: none;
-            padding: 0;
-            width: 100%;
-            font-size: 0.9em;
-        }
-        
-        .card-back strong {
-            font-weight: 700;
-            color: var(--color-white);
-        }
-        .card-back .value {
-            color: var(--color-yellow-accent);
-            font-weight: bold;
-        }
-        .card-back .details-section {
-            margin-bottom: 1em;
-            width: 100%;
-        }
-        .card-back .details-section ul {
-            padding-left: 1em;
-            list-style-type: '- ';
-        }
-        
-        /* --- Section Ergonomie --- */
-        .ergonomie-section {
-            padding: 2em;
-            background-color: var(--color-light-grey);
-            border-radius: 8px;
-        }
-        .ergonomie-section h2 {
-            text-align: center;
-            color: var(--color-bg-start);
-            font-weight: 700;
-            margin-top: 0;
-        }
-        .ergonomie-section p {
-            text-align: justify;
-        }
     </style>
 </head>
 <body>
@@ -199,7 +119,7 @@
     <div class="container">
         <header>
             <h1>Analyse comparative des normes Europe (EN 362) vs. Amérique du Nord (ANSI & CSA)</h1>
-            <p class="subtitle">Synthèse des exigences pour les connecteurs à grande ouverture (MGO).<br/>Cliquez sur une carte pour explorer les détails techniques.</p>
+            <p class="subtitle">Synthèse des exigences pour les connecteurs à grande ouverture (MGO).<br/>Survolez les termes techniques soulignés pour une illustration.</p>
         </header>
 
         <main class="grid-container">
@@ -224,7 +144,7 @@
                             <strong>Petit Axe (Latéral) :</strong>
                             <ul>
                                 <li><strong>EN 362:</strong> <span class="value">Non requis</span> pour Classe A</li>
-                                <li><strong>ANSI & CSA:</strong> <span class="value">16 kN</span> pendant 1 min mais exemption si présence d'un oeil captif</li>
+                                <li><strong><span class="info-hover" style="--image-url: url('images/ANSI Z359.12 - résistance petit axe.png');">ANSI</span> & <span class="info-hover" style="--image-url: url('images/CSA Z259.12 - résistance petit axe.png');">CSA</span>:</strong> <span class="value">16 kN</span> pendant 1 min mais exemption si présence d'un oeil captif</li>
                             </ul>
                         </div>
                     </div>
@@ -243,15 +163,17 @@
                         <div class="details-section">
                             <strong>Exigences de force :</strong>
                             <ul>
-                                <li><strong>EN 362:</strong> Frontale <span class="value">1 kN</span> (90s), Latérale <span class="value">1,5 kN</span> (60s)</li>
-                                <li><strong>ANSI & CSA:</strong> Frontale & Latérale <span class="value">16 kN</span> (60s)</li>
+                                <li><strong>EN 362:</strong> <span class="info-hover" style="--image-url: url('images/EN 362 - résistance frontale du doigt.png');">Frontale</span> <span class="value">1 kN</span> (90s), <span class="info-hover" style="--image-url: url('images/EN 362 - résistance latérale du doigt.png');">Latérale</span> <span class="value">1,5 kN</span> (60s)</li>
+                                <li><strong>ANSI:</strong> <span class="info-hover" style="--image-url: url('images/ANSI Z359.12 - résistance frontale du doigt.png');">Frontale</span> & <span class="info-hover" style="--image-url: url('images/ANSI Z359.12 - résistance latérale du doigt.png');">Latérale</span> <span class="value">16 kN</span> (60s)</li>
+                                <li><strong>CSA:</strong> <span class="info-hover" style="--image-url: url('images/CSA Z259.12 - résistance frontale du doigt.png');">Frontale</span> & <span class="info-hover" style="--image-url: url('images/CSA Z259.12 - résistance latérale du doigt.png');">Latérale</span> <span class="value">16 kN</span> (60s)</li>
                             </ul>
                         </div>
                         <div class="details-section">
                             <strong>Critères d'acceptation :</strong>
                             <ul>
                                 <li><strong>EN 362:</strong> Doit rester fonctionnel. Écart de <span class="value">1 mm</span> max (frontal, si applicable).</li>
-                                <li><strong>ANSI & CSA:</strong> Écart doigt/corps de <span class="value">3.1 mm</span> max.</li>
+                                <li><strong>ANSI:</strong> Écart doigt/corps de <span class="value">3.1 mm</span> max.</li>
+                                <li><strong><span class="info-hover" style="--image-url: url('images/CSA Z259.12 - critère résistance frontale du doigt.png');">CSA</span>:</strong> Écart doigt/corps de <span class="value">3 mm</span> max.</li>
                             </ul>
                         </div>
                     </div>
@@ -269,13 +191,18 @@
                          <h3>Détails techniques : Transversal</h3>
                          <div class="details-section">
                             <strong>EN 362:2004 :</strong>
-                            <ul><li><span class="value">Aucune exigence</span> spécifiée pour ce scénario.</li></ul>
+                            <ul><li><span class="value">Aucune exigence</span> spécifiée.</li></ul>
                          </div>
                          <div class="details-section">
-                            <strong>ANSI & CSA :</strong>
+                            <strong>Essai Statique (ANSI & CSA) :</strong>
                             <ul>
-                                <li><strong>Essai Statique :</strong> Requis à <span class="value">16 kN</span> pendant 1 min.</li>
-                                <li><strong>Essai Dynamique :</strong> Chute de 100 kg requise. La hauteur de chute est ajustée pour générer une force d'arrêt de 16-17 kN.</li>
+                                <li>Requis à <span class="value">16 kN</span> pendant 1 min. (<span class="info-hover" style="--image-url: url('images/ANSI Z359.12 - résistance transversal du corps.png');">ANSI</span> / <span class="info-hover" style="--image-url: url('images/CSA Z259.12 - résistance transversal du corps.png');">CSA</span>)</li>
+                            </ul>
+                         </div>
+                         <div class="details-section">
+                            <strong>Essai Dynamique (ANSI & CSA) :</strong>
+                            <ul>
+                                <li>Chute de 100 kg requise. La hauteur de chute est ajustée pour générer une force d'arrêt de 16-17 kN. (<span class="info-hover" style="--image-url: url('images/ANSI Z359.12 - résistance transversal du corps - test dynamique.png');">ANSI</span> / <span class="info-hover" style="--image-url: url('images/CSA Z259.12 - résistance transversal du corps - test dynamique.png');">CSA</span>)</li>
                             </ul>
                          </div>
                     </div>
@@ -293,11 +220,12 @@
     </div>
 
     <script>
-        // Script simple pour gérer le retournement des cartes au clic
-        const cards = document.querySelectorAll('.card');
-        cards.forEach(card => {
-            card.addEventListener('click', function() {
-                this.classList.toggle('is-flipped');
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.classList.toggle('is-flipped');
+                });
             });
         });
     </script>
