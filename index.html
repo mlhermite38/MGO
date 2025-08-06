@@ -8,21 +8,22 @@
         /* --- Import de la police --- */
         @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
         
-        /* --- Palette de couleurs et variables --- */
+        /* --- Palette de couleurs finale (inspirée du modèle) --- */
         :root {
-            --color-bg-start: #2c3e50;
-            --color-bg-end: #4ca1af;
+            --color-bg-dark: #1e1e1e;
+            --color-container-bg: #2d2d2d;
             --color-yellow-accent: #FFC425;
-            --color-text-light: #f8f9fa;
-            --color-text-medium: #bdc3c7;
+            --color-text-light: #f0f0f0;
+            --color-text-medium: #a0a0a0;
             --color-white: #FFFFFF;
-            --shadow: 0 10px 30px rgba(0,0,0,0.15);
+            --color-border: #444;
+            --shadow: 0 10px 40px rgba(0,0,0,0.4);
         }
 
         /* --- Styles de base --- */
         body {
             font-family: 'Lato', sans-serif;
-            background: linear-gradient(to right, var(--color-bg-start), var(--color-bg-end));
+            background: linear-gradient(to right, var(--color-bg-dark), #3c3c3c);
             color: var(--color-text-light);
             margin: 0;
             padding: 2em;
@@ -33,12 +34,12 @@
         .container {
             max-width: 1200px;
             margin: 2em auto;
-            background: var(--color-bg-start);
+            background: var(--color-container-bg);
             color: var(--color-text-light);
             padding: 2em 3em;
             border-radius: 10px;
             box-shadow: var(--shadow);
-            border: 1px solid var(--color-bg-end);
+            border: 1px solid var(--color-border);
         }
 
         header h1 {
@@ -57,7 +58,7 @@
             text-align: center;
         }
         
-        /* --- Style pour l'effet de survol (hover) --- */
+        /* --- Style pour l'effet de survol (hover) avec image très grande --- */
         .info-hover {
             position: relative; 
             text-decoration: underline dotted;
@@ -71,16 +72,21 @@
             bottom: 120%;
             left: 50%;
             transform: translateX(-50%);
-            width: 500px;
-            height: 375px;
-            max-width: 90vw;
+            
+            /* --- TAILLE FINALE (DOUBLÉE) --- */
+            width: 1000px;
+            height: 750px;
+            max-width: 90vw;   /* Contrainte pour ne pas dépasser la largeur de l'écran */
+            max-height: 90vh;  /* Contrainte pour ne pas dépasser la hauteur de l'écran */
+
             background-image: var(--image-url);
             background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
             border: 3px solid var(--color-white);
             border-radius: 8px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.4);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -112,12 +118,12 @@
             box-sizing: border-box;
             border-radius: 8px;
             text-align: center;
-            background-color: var(--color-bg-start);
-            border: 1px solid var(--color-bg-end);
+            background-color: var(--color-container-bg);
+            border: 1px solid var(--color-border);
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         .card-back { transform: rotateY(180deg); text-align: left; align-items: flex-start; justify-content: flex-start; }
-        .card-front .icon svg { width: 50px; height: 50px; margin-bottom: 0.7em; color: var(--color-bg-end); }
+        .card-front .icon svg { width: 50px; height: 50px; margin-bottom: 0.7em; color: var(--color-yellow-accent); }
         .card-front h2 { font-size: 1.6em; font-weight: 700; margin: 0.2em 0; color: var(--color-text-light); }
         .card-front .summary { font-size: 1.1em; font-weight: 300; color: var(--color-text-medium); padding: 0 1em; }
         .card-back h3 { color: var(--color-yellow-accent); font-weight: 700; font-size: 1.2em; border-bottom: 2px solid var(--color-yellow-accent); padding-bottom: 0.5em; margin-top: 0; margin-bottom: 1em; width: 100%; }
@@ -128,7 +134,7 @@
         .card-back .details-section ul { padding-left: 1em; list-style-type: '- '; }
         
         /* --- Section Ergonomie --- */
-        .ergonomie-section { padding-top: 2em; border-top: 1px solid var(--color-bg-end); margin-top: 2em; }
+        .ergonomie-section { padding-top: 2em; border-top: 1px solid var(--color-border); margin-top: 2em; }
         .ergonomie-section h2 { text-align: center; color: var(--color-white); font-weight: 700; margin-top: 0; }
         .ergonomie-section p { text-align: justify; color: var(--color-text-medium); }
 
