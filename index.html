@@ -5,25 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analyse Comparative | Normes Connecteurs MGO</title>
     <style>
-        /* --- Import de la police (Lato est un bon équivalent moderne) --- */
+        /* --- Import de la police (Lato) --- */
         @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
         
-        /* --- Palette de couleurs --- */
+        /* --- Palette de couleurs inspirée du modèle --- */
         :root {
-            --color-dark-blue: #2c3e50;
-            --color-light-blue: #4ca1af;
+            --color-bg-start: #2c3e50;
+            --color-bg-end: #4ca1af;
             --color-yellow-accent: #FFC425;
             --color-text-dark: #333;
             --color-text-light: #f8f9fa;
             --color-white: #FFFFFF;
-            --color-light-grey: #f0f0f0;
-            --shadow: 0 8px 25px rgba(0,0,0,0.1);
+            --color-light-grey: #f8f9fa;
+            --shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
 
         /* --- Styles de base --- */
         body {
             font-family: 'Lato', sans-serif;
-            background: linear-gradient(to right, var(--color-dark-blue), var(--color-light-blue));
+            background: linear-gradient(to right, var(--color-bg-start), var(--color-bg-end));
             color: var(--color-text-dark);
             margin: 0;
             padding: 2em;
@@ -34,7 +34,7 @@
         /* --- Conteneur Principal & En-tête --- */
         .container {
             max-width: 1200px;
-            margin: auto;
+            margin: 2em auto;
             background: var(--color-white);
             padding: 2em 3em;
             border-radius: 10px;
@@ -50,7 +50,7 @@
         header h1 {
             font-weight: 700;
             font-size: 2.2em;
-            color: var(--color-dark-blue);
+            color: var(--color-bg-start);
         }
 
         header p.subtitle {
@@ -72,7 +72,7 @@
         /* --- Style des cartes interactives --- */
         .card {
             background-color: transparent;
-            height: 400px;
+            height: 420px;
             perspective: 1500px;
             cursor: pointer;
         }
@@ -113,7 +113,7 @@
         }
 
         .card-back {
-            background-color: var(--color-dark-blue);
+            background-color: var(--color-bg-start);
             color: var(--color-text-light);
             transform: rotateY(180deg);
             text-align: left;
@@ -125,14 +125,14 @@
             width: 50px;
             height: 50px;
             margin-bottom: 0.7em;
-            color: var(--color-light-blue);
+            color: var(--color-bg-end);
         }
         
         .card-front h2 {
             font-size: 1.6em;
             font-weight: 700;
             margin: 0.2em 0;
-            color: var(--color-dark-blue);
+            color: var(--color-bg-start);
         }
         
         .card-front .summary {
@@ -170,6 +170,7 @@
         }
         .card-back .details-section {
             margin-bottom: 1em;
+            width: 100%;
         }
         .card-back .details-section ul {
             padding-left: 1em;
@@ -184,14 +185,13 @@
         }
         .ergonomie-section h2 {
             text-align: center;
-            color: var(--color-dark-blue);
+            color: var(--color-bg-start);
             font-weight: 700;
             margin-top: 0;
         }
         .ergonomie-section p {
             text-align: justify;
         }
-
     </style>
 </head>
 <body>
@@ -207,7 +207,7 @@
                 <div class="card-inner">
                     <div class="card-front">
                          <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8z"/><path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v13a.5.5 0 0 1-1 0v-13A.5.5 0 0 1 8 1z"/></svg></div>
-                        <h2>Résistance sur les Axes</h2>
+                        <h2>Résistance grand axe / petit axe</h2>
                         <p class="summary">Exigences proches sur le grand axe, mais divergence majeure sur le petit axe</p>
                     </div>
                     <div class="card-back">
@@ -224,8 +224,7 @@
                             <strong>Petit Axe (Latéral) :</strong>
                             <ul>
                                 <li><strong>EN 362:</strong> <span class="value">Non requis</span> pour Classe A</li>
-                                <li><strong>ANSI & CSA:</strong> <span class="value">16 kN</span> pendant 1 min</li>
-                                <li>*Exemption si présence d'un oeil captif</li>
+                                <li><strong>ANSI & CSA:</strong> <span class="value">16 kN</span> pendant 1 min mais exemption si présence d'un oeil captif</li>
                             </ul>
                         </div>
                     </div>
@@ -242,17 +241,17 @@
                     <div class="card-back">
                         <h3>Détails techniques : Doigt</h3>
                         <div class="details-section">
-                            <strong>Frontale (pression extérieure) :</strong>
+                            <strong>Exigences de force :</strong>
                             <ul>
-                                <li><strong>EN 362:</strong> <span class="value">1 kN</span></li>
-                                <li><strong>ANSI & CSA:</strong> <span class="value">16 kN</span> pendant 1 min</li>
+                                <li><strong>EN 362:</strong> Frontale <span class="value">1 kN</span> (90s), Latérale <span class="value">1,5 kN</span> (60s)</li>
+                                <li><strong>ANSI & CSA:</strong> Frontale & Latérale <span class="value">16 kN</span> (60s)</li>
                             </ul>
                         </div>
                         <div class="details-section">
-                            <strong>Latérale (pression sur le côté) :</strong>
-                             <ul>
-                                <li><strong>EN 362:</strong> <span class="value">1,5 kN</span></li>
-                                <li><strong>ANSI & CSA:</strong> <span class="value">16 kN</span> pendant 1 min</li>
+                            <strong>Critères d'acceptation :</strong>
+                            <ul>
+                                <li><strong>EN 362:</strong> Doit rester fonctionnel. Écart de <span class="value">1 mm</span> max (frontal, si applicable).</li>
+                                <li><strong>ANSI & CSA:</strong> Écart doigt/corps de <span class="value">3.1 mm</span> max.</li>
                             </ul>
                         </div>
                     </div>
@@ -263,20 +262,20 @@
                 <div class="card-inner">
                     <div class="card-front">
                         <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/><path fill-rule="evenodd" d="M4.354 1.646a.5.5 0 0 1 0 .708L10.293 8l-5.939 5.646a.5.5 0 0 1-.708-.708l5.293-5a.5.5 0 0 0 0-.708l-5.293-5a.5.5 0 0 1 .708-.708z"/></svg></div>
-                        <h2>Chargement Transversal</h2>
+                        <h2>Chargement transversal du corps</h2>
                         <p class="summary">Scénario non couvert par la norme EN 362</p>
                     </div>
                     <div class="card-back">
                          <h3>Détails techniques : Transversal</h3>
                          <div class="details-section">
                             <strong>EN 362:2004 :</strong>
-                            <ul><li><span class="value">Aucune exigence</span> spécifiée.</li></ul>
+                            <ul><li><span class="value">Aucune exigence</span> spécifiée pour ce scénario.</li></ul>
                          </div>
                          <div class="details-section">
                             <strong>ANSI & CSA :</strong>
                             <ul>
                                 <li><strong>Essai Statique :</strong> Requis à <span class="value">16 kN</span> pendant 1 min.</li>
-                                <li><strong>Essai Dynamique :</strong> Chute de 100 kg requise.</li>
+                                <li><strong>Essai Dynamique :</strong> Chute de 100 kg requise. La hauteur de chute est ajustée pour générer une force d'arrêt de 16-17 kN.</li>
                             </ul>
                          </div>
                     </div>
