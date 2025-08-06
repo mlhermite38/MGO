@@ -8,15 +8,14 @@
         /* --- Import de la police --- */
         @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
         
-        /* --- Palette de couleurs et variables (inspirée du modèle) --- */
+        /* --- Palette de couleurs et variables --- */
         :root {
             --color-bg-start: #2c3e50;
             --color-bg-end: #4ca1af;
             --color-yellow-accent: #FFC425;
-            --color-text-dark: #333;
             --color-text-light: #f8f9fa;
+            --color-text-medium: #bdc3c7;
             --color-white: #FFFFFF;
-            --color-light-grey: #f8f9fa;
             --shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
 
@@ -24,7 +23,7 @@
         body {
             font-family: 'Lato', sans-serif;
             background: linear-gradient(to right, var(--color-bg-start), var(--color-bg-end));
-            color: var(--color-text-dark);
+            color: var(--color-text-light);
             margin: 0;
             padding: 2em;
             line-height: 1.6;
@@ -34,23 +33,25 @@
         .container {
             max-width: 1200px;
             margin: 2em auto;
-            background: var(--color-white);
+            background: var(--color-bg-start);
+            color: var(--color-text-light);
             padding: 2em 3em;
             border-radius: 10px;
             box-shadow: var(--shadow);
+            border: 1px solid var(--color-bg-end);
         }
 
         header h1 {
             font-weight: 700;
             font-size: 2.2em;
-            color: var(--color-bg-start);
+            color: var(--color-white);
             text-align: center;
         }
 
         header p.subtitle {
             font-size: 1.1em;
             font-weight: 300;
-            color: #555;
+            color: var(--color-text-medium);
             max-width: 800px;
             margin: 0.5em auto 0 auto;
             text-align: center;
@@ -60,18 +61,19 @@
         .info-hover {
             position: relative; 
             text-decoration: underline dotted;
-            text-decoration-color: var(--color-bg-end);
+            text-decoration-color: var(--color-yellow-accent);
             cursor: help;
         }
 
         .info-hover::after {
             content: '';
             position: absolute;
-            bottom: 150%;
+            bottom: 120%;
             left: 50%;
             transform: translateX(-50%);
-            width: 300px;
-            height: 220px;
+            width: 500px;
+            height: 375px;
+            max-width: 90vw;
             background-image: var(--image-url);
             background-size: contain;
             background-position: center;
@@ -91,26 +93,44 @@
             visibility: visible;
         }
         
-        /* --- Styles des Cartes & Sections --- */
+        /* --- Grille et style des cartes --- */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5em; margin: 2.5em 0 3em 0; }
         .card { background-color: transparent; height: 420px; perspective: 1500px; cursor: pointer; }
-        .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.7s; transform-style: preserve-3d; box-shadow: 0 4px 15px rgba(0,0,0,0.07); border: 1px solid #e0e0e0; border-radius: 8px; }
+        .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.7s; transform-style: preserve-3d; }
         .card.is-flipped .card-inner { transform: rotateY(180deg); }
-        .card-front, .card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 2em; box-sizing: border-box; border-radius: 8px; text-align: center; }
-        .card-front { background-color: var(--color-white); }
-        .card-back { background-color: var(--color-bg-start); color: var(--color-text-light); transform: rotateY(180deg); text-align: left; align-items: flex-start; justify-content: flex-start; }
+        .card-front, .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2em;
+            box-sizing: border-box;
+            border-radius: 8px;
+            text-align: center;
+            background-color: var(--color-bg-start);
+            border: 1px solid var(--color-bg-end);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .card-back { transform: rotateY(180deg); text-align: left; align-items: flex-start; justify-content: flex-start; }
         .card-front .icon svg { width: 50px; height: 50px; margin-bottom: 0.7em; color: var(--color-bg-end); }
-        .card-front h2 { font-size: 1.6em; font-weight: 700; margin: 0.2em 0; color: var(--color-bg-start); }
-        .card-front .summary { font-size: 1.1em; font-weight: 300; color: #555; padding: 0 1em; }
+        .card-front h2 { font-size: 1.6em; font-weight: 700; margin: 0.2em 0; color: var(--color-text-light); }
+        .card-front .summary { font-size: 1.1em; font-weight: 300; color: var(--color-text-medium); padding: 0 1em; }
         .card-back h3 { color: var(--color-yellow-accent); font-weight: 700; font-size: 1.2em; border-bottom: 2px solid var(--color-yellow-accent); padding-bottom: 0.5em; margin-top: 0; margin-bottom: 1em; width: 100%; }
         .card-back ul { list-style-type: none; padding: 0; width: 100%; font-size: 0.9em; }
         .card-back strong { font-weight: 700; color: var(--color-white); }
         .card-back .value { color: var(--color-yellow-accent); font-weight: bold; }
         .card-back .details-section { margin-bottom: 1em; width: 100%; }
         .card-back .details-section ul { padding-left: 1em; list-style-type: '- '; }
-        .ergonomie-section { padding: 2em; background-color: var(--color-light-grey); border-radius: 8px; }
-        .ergonomie-section h2 { text-align: center; color: var(--color-bg-start); font-weight: 700; margin-top: 0; }
-        .ergonomie-section p { text-align: justify; }
+        
+        /* --- Section Ergonomie --- */
+        .ergonomie-section { padding-top: 2em; border-top: 1px solid var(--color-bg-end); margin-top: 2em; }
+        .ergonomie-section h2 { text-align: center; color: var(--color-white); font-weight: 700; margin-top: 0; }
+        .ergonomie-section p { text-align: justify; color: var(--color-text-medium); }
 
     </style>
 </head>
@@ -119,7 +139,7 @@
     <div class="container">
         <header>
             <h1>Analyse comparative des normes Europe (EN 362) vs. Amérique du Nord (ANSI & CSA)</h1>
-            <p class="subtitle">Synthèse des exigences pour les connecteurs à grande ouverture (MGO).<br/>Survolez les termes techniques soulignés pour une illustration.</p>
+            <p class="subtitle">Synthèse des exigences pour les connecteurs à grande ouverture (MGO).<br/>Cliquez sur une carte pour explorer les détails et survolez les termes soulignés pour une illustration.</p>
         </header>
 
         <main class="grid-container">
